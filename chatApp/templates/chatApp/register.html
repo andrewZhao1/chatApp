@@ -6,11 +6,21 @@
 <body>
 	<form action="{% url 'chatApp:register_action' %}" method="post">
 		{% csrf_token %}
-		昵称：<input type="text" name="name">
-		电话号码：<input type="text" name="phone">
-		密码：<input type="password" name="password">
-		年龄：<input type="text" name="age">
+		{% if user %}
+			<input type="hidden" name="userid" value="{{ user.id }}">
+			昵称：<input type="text" name="name" value="{{ user.userName }}">
+			电话号码：<input type="text" name="phone" value="{{ user.userPhoneNum }}">
+			密码：<input type="password" name="password" value="{{ user.userPw }}">
+			年龄：<input type="text" name="age" value="{{ user.userAge }}">
+		{% else %}
+			<input type="hidden" name="userid" value="0">
+			昵称：<input type="text" name="name>
+			电话号码：<input type="text" name="phone">
+			密码：<input type="password" name="password">
+			年龄：<input type="text" name="age">
+		{% endif %}
 		<input type="submit" value="提交">
+
 	</form>
 </body>
 </html>

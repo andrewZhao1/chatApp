@@ -5,6 +5,6 @@
 </head>
 <body>
 	<h1>welcome {{user.userName}}</h1>
-	<a href="">修改资料</a>
+	<a href="{% url 'chatApp:register' user.id %}">修改资料</a>
 </body>
 </html>
