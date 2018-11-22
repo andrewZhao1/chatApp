@@ -15,8 +15,8 @@ def register(request, userid):
 def login_action(request):
 	phone = request.POST.get('phone')
 	password = request.POST.get('password')
-	user = models.user.objects.get(userPhoneNum=phone)
-	if user and user.userPw == password:
+	user = models.user.objects.get(phone_number=phone)
+	if user and user.password == password:
 		return render(request, 'chatApp/main.html', {'user': user})
 	else:
 		return render(request, 'chatApp/index.html', {'message': '用户不存在或密码错误'})
@@ -29,15 +29,17 @@ def register_action(request):
 	phone = request.POST.get('phone')
 	password = request.POST.get('password')
 	age = request.POST.get('age')
+	birthday = request.POST.get('birthday', 'null')
 	
 	if userid == '0':
-		models.user.objects.create(userName=name, userPhoneNum=phone, userPw=password, userAge=age)
+		models.user.objects.create(user_name=name, phone_number=phone, password=password, age=age, birthday=birthday)
 		return render(request, 'chatApp/index.html')
 	else:
 		user = models.user.objects.get(pk=userid)
-		user.userName = name
-		user.userPhoneNum = phone
-		user.userPw = password
-		user.userAge = age
+		user.user_name = name
+		user.phone_number = phone
+		user.password = password
+		user.age = age
+		user.birthday = birthday
 		user.save()
 		return render(request, 'chatApp/main.html', {'user': user})
